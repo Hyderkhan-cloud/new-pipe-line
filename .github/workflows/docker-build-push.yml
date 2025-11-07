@@ -20,12 +20,12 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.USERNAME }}       # Docker Hub username stored in GitHub Secrets
-          password: ${{ secrets.DOCKERHUB_TOKEN }}  # Docker Hub access token stored in GitHub Secrets
+          username: ${{ secrets.USERNAME }}       # GitHub Secret with Docker Hub username
+          password: ${{ secrets.DOCKERHUB_TOKEN }}  # GitHub Secret with Docker Hub PAT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ secrets.USERNAME }}/myapp:latest # Replace 'myapp' with your image name
+          tags: ${{ secrets.USERNAME }}/myapp:latest
