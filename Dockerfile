@@ -1,31 +1,18 @@
-name: Build and Push Docker Image
+# Use an official base image
+FROM node:18
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+# Set working directory
+WORKDIR /app
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+# Copy the rest of your app
+COPY . .
 
-      - name: Set up Docker Buildx (build toolkit)
-        uses: docker/setup-buildx-action@v3
+# Expose the application port
+EXPOSE 3000
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ DOCKERHUB_USERNAME }}       # GitHub Secret with Docker Hub username
-          password: ${{ DOCKERHUB_TOKEN }}  # GitHub Secret with Docker Hub PAT
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.USERNAME }}/myapp:latest
+# Start the application
+CMD ["npm", "start"]
