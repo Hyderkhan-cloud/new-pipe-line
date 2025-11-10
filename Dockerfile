@@ -1,18 +1,9 @@
-# Use an official base image
-FROM node:18
+# Use the official Nginx image
+FROM nginx:latest
 
-# Set working directory
-WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package*.json ./
-RUN npm install
+# Expose port 80 for web traffic
+EXPOSE 80
 
-# Copy the rest of your app
-COPY . .
-
-# Expose the application port
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
+# Start Nginx when the container runs
+CMD ["nginx", "-g", "daemon off;"]
