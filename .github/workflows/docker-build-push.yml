@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Push Nginx Image
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -22,11 +22,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Step 3: Build and push Docker image
-      - name: Build and push Docker 
+      - name: Build and push Nginx image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: |
             khanhyder4/new-pipe-line:latest
-            khanhyder4/new-pipe-line:v2.3.4
+            khanhyder4/new-pipe-line:v1.0.0
